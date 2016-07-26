@@ -20,5 +20,8 @@
   "homepage": "https://github.com/xori/bootler#readme",
   "devDependencies": {
     "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "discord.js": "^8.0.0"
   }
 }
