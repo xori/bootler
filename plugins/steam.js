@@ -62,7 +62,7 @@ module.exports = function (robot) {
 
 module.exports.test = function(engine) {
   let assert = require('assert');
-  describe('Steam Plugin', function() {
+  describe.skip('Steam Plugin', function() {
     it("checks sales", function(done) {
       engine.test('@bot whats on steam', function(text) {
         assert(text.length > 0);
