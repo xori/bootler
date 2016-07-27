@@ -1,4 +1,5 @@
-var config = require('../config');
+if(!process.env.DISCORD_TOKEN)
+  var config = require('../config');
 var pack = require('../package.json');
 var Discord = require("discord.js");
 var bot = new Discord.Client();
@@ -33,4 +34,10 @@ bot.on("message", function(message) {
     }
 });
 
-bot.loginWithToken(config.token);
+bot.loginWithToken(process.env.DISCORD_TOKEN || config.token)
+.then(function() {
+  console.log("Connected.");
+})
+.catch(function(err) {
+  console.error(err);
+});
