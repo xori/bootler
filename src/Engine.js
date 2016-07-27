@@ -60,4 +60,9 @@ module.exports = class Engine {
       }
     });
   }
+
+  // For reporting errors if they occur.
+  report(err) {
+    if(err) console.error(err);
+  }
 }
