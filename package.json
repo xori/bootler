@@ -30,7 +30,6 @@
   },
   "dependencies": {
     "discord.js": "^8.0.0",
-    "fs-extra": "^0.30.0",
     "roll": "^1.1.0",
     "walk-sync": "^0.2.7"
   }
