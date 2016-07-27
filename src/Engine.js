@@ -56,7 +56,7 @@ module.exports = class Engine {
       mentions:[{bot: str.indexOf("@bot") > -1}],
       cleanContent: str
     }, {
-      reply: function(_, result) {
+      sendMessage: function(_, result) {
         callback(result);
       }
     });
