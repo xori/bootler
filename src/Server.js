@@ -1,5 +1,6 @@
+var config = {};
 if(!process.env.DISCORD_TOKEN)
-  var config = require('../config');
+  config = require('../config');
 var pack = require('../package.json');
 var Discord = require("discord.js");
 var bot = new Discord.Client();
