@@ -1,6 +1,6 @@
 # Environmental Variables
 env*
-config.*
+config.j*
 
 # Logs
 logs
