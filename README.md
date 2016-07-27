@@ -23,3 +23,13 @@ or for something a bit more interesting
 
 > Evan: @bootler roll 3d6+3<br>
 > Bootler: 3d6+3 => 19
+
+## Development
+
+1. Fork
+1. [Get a test TOKEN key](https://discordapp.com/developers/applications/me)
+  * copy `config.example.js` to `config.js` and add your token
+1. `npm install; npm test; npm start`
+1. `git checkout -b my-new-feature`
+1. Work on your feature
+1. Open a pull request
