@@ -1,15 +1,19 @@
 const assert = require('assert');
+const Engine = require('../src/Engine');
+let plugins = require('../src/PluginLoader');
+let engine = new Engine();
 
 describe('Bot Engine', function() {
-  it('.onMention', function() { });
-  it('.on', function() { });
-  it('.brain');
-  it('.test');
-  it('starts without errors');
+  it('has the proper interface', function() {
+    assert.ok(engine.on);
+    assert.ok(engine.respond);
+    assert.ok(engine.test);
+  })
 
-  describe('#indexOf()', function() {
-    it('should return -1 when the value is not present', function() {
-      assert(-1);
-    });
-  });
+  describe('Plugins', function() {
+    for(let i = 0; i < plugins.length; i++) {
+      if(plugins[i].test)
+        plugins[i].test(engine);
+    }
+  })
 });
