@@ -10,6 +10,11 @@ describe('Bot Engine', function() {
     assert.ok(engine.test);
   })
 
+  it('the brain remembers', function() {
+    engine.brain('name', 'Foo Bar');
+    assert.equal(engine.brain('name'), 'Foo Bar')
+  })
+
   describe('Plugins', function() {
     for(let i = 0; i < plugins.length; i++) {
       if(plugins[i].test)
