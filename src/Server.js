@@ -1,11 +1,11 @@
 const fs = require('fs-extra')
-const config = fs.readJsonSync('./config.json', {throws: false}) || {};
-let pack = require('../package.json');
-let Discord = require("discord.js");
-let Engine = require('./Engine');
+const config = require('./Config')
+const pack = require('../package.json');
+const Discord = require("discord.js");
+const Engine = require('./Engine');
 
-let bot = new Discord.Client({autoReconnect:true});
-let engine = new Engine(bot);
+const bot = new Discord.Client({autoReconnect:true});
+const engine = new Engine(bot);
 
 bot.on("message", function(message) {
   try {
@@ -15,7 +15,7 @@ bot.on("message", function(message) {
   }
 });
 
-bot.loginWithToken(process.env.DISCORD_TOKEN || config.token, "")
+bot.loginWithToken(config.token)
   .then(function() {
     console.log("Connected.");
   }).catch(function(err) {

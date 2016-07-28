@@ -7,7 +7,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 const pack = require('../package.json');
-const config = fs.readJsonSync('./config.json', {throws: false}) || { brain: './brain' };
+const config = require('./Config')
 const dbLocation = path.resolve(config.brain, 'brain.json');
 console.log(dbLocation);
 
