@@ -5,7 +5,7 @@ let pack = require('../package.json');
 let Discord = require("discord.js");
 let Engine = require('./Engine');
 
-let bot = new Discord.Client();
+let bot = new Discord.Client({autoReconnect:true});
 let engine = new Engine(bot);
 
 bot.on("message", function(message) {

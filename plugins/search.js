@@ -11,7 +11,6 @@ module.exports = function(engine) {
         if (!error && response.statusCode == 200) {
           let data = JSON.parse(body);
           if(data.itemListElement.length > 0) {
-            console.log(data);
             let entry = data.itemListElement[0].result;
             let description = entry.detailedDescription && entry.detailedDescription.articleBody ? entry.detailedDescription.articleBody : entry.description;
             let image = entry.image && entry.image.contentUrl ? entry.image.contentUrl : entry.url;
