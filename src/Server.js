@@ -1,6 +1,5 @@
-let config = {};
-if(!process.env.DISCORD_TOKEN)
-  config = require('../config');
+const fs = require('fs-extra')
+const config = fs.readJsonSync('./config.json', {throws: false}) || {};
 let pack = require('../package.json');
 let Discord = require("discord.js");
 let Engine = require('./Engine');

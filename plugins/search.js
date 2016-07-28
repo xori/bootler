@@ -1,7 +1,9 @@
 const request = require('request');
+const fs = require('fs-extra');
+const config = fs.readJsonSync('./config.json', {throws: false}) || {};
 
 module.exports = function(engine) {
-  let apikey = process.env.GOOGLE_API || require('../config.js').google_api
+  let apikey = process.env.GOOGLE_API || config.google_api;
 
   engine.on( /^(?:who|what) is (.+)\?$/i, function(message, params, send) {
     let search = params[1];

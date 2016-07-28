@@ -1,6 +1,7 @@
 # Environmental Variables
 env*
 config.j*
+brain.json
 
 # Logs
 logs
