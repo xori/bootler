@@ -1,5 +1,5 @@
 const fs = require('fs-extra')
-const config = require('./Config')
+const config = require('./ConfigLoader')
 const pack = require('../package.json');
 const Discord = require("discord.js");
 const Engine = require('./Engine');

@@ -10,7 +10,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 const pack = require('../package.json');
-const config = require('./Config')
+const config = require('./ConfigLoader')
 const dbLocation = path.resolve(config.brain, 'brain.json');
 
 fs.ensureFileSync(dbLocation);
@@ -23,8 +23,6 @@ module.exports = function(keyword, data) {
   }
 
   database[keyword] = data;
-  fs.writeJson(dbLocation, database, function(err) {
-    if(err) console.error(err);
-  });
+  fs.writeJsonSync(dbLocation, database);
   return data;
 }
