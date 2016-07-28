@@ -3,6 +3,11 @@ module.exports = function(engine) {
   engine.on( /^(?:hello|what is|hey|hi|yo|who is)?\s?@bootler#\d+[\s\.\?\!]*$/i, function(message, params, send) {
     send("Hi, I'm a dumb bot! [Make me smarter](https://github.com/xori/bootler)");
   });
+
+  engine.respond( /--version$/i, function(m, p, send) {
+    let pack = require('../package.json');
+    send(pack.version);
+  });
 }
 
 module.exports.test = function(engine) {
