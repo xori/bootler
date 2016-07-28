@@ -17,6 +17,7 @@ fs.ensureFileSync(dbLocation);
 let database = fs.readJsonSync(dbLocation, {throws: false}) || {};
 
 module.exports = function(keyword, data) {
+  database = fs.readJsonSync(dbLocation, {throws: false}) || {};
   if(data === undefined) {
     return database[keyword];
   }
