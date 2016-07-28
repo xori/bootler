@@ -1,9 +1,8 @@
 const request = require('request');
 const fs = require('fs-extra');
-const config = require('./Config')
 
 module.exports = function(engine) {
-  let apikey = config.google_api;
+  let apikey = engine.config.google_api;
 
   engine.on( /^(?:who|what) is (.+)\?$/i, function(message, params, send) {
     let search = params[1];

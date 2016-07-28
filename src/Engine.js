@@ -2,12 +2,14 @@
 module.exports = class Engine {
   constructor(client) {
     this.client = client;
+    this.config = require('./ConfigLoader');
+    this.brain = require('./Brain');
+
     this.plugins = [];
     this._plugins = require('./PluginLoader');
     for(let i = 0; i < this._plugins.length; i++) {
       this._plugins[i](this); // startup.
     }
-    this.brain = require('./Brain');
   }
 
   ////
