@@ -56,7 +56,7 @@ function report(user, bank) {
   let result = `${user}'s Assets:\n`;
   if(Object.keys(account).length === 0) result += "nothing...";
   for(let currency in account) {
-    result += '  - ' + humanize(currency, account[currency]) + '\n';
+    result += '  ' + humanize(currency, account[currency]) + '\n';
   }
   return result;
 }
