@@ -1,15 +1,22 @@
 const R = require('roll');
 
 module.exports = function(engine) {
-  engine.respond(/roll ([^\s]+)$/i, function(message, params, send) {
-    let ask = params[1];
+  engine.respond(/roll (.+)$/i, function(message, params, send) {
+    let ask = params[1].split(" ");
     let dice = new R();
 
-    if(dice.validate(ask)) {
-      send(`${ask} => ${dice.roll(ask).result}`);
-    } else {
-      send(`That ain't a valid roll.`)
+    let result = "";
+    let resultValue = 0;
+    for(let i = 0; i < ask.length; i++ ) {
+      let _ = ask[i].trim();
+      if(dice.validate(_)) {
+        result += _ + " ";
+        resultValue += dice.roll(_).result;
+      } else {
+        return send(`${_} isn't in standard dice format.`)
+      }
     }
+    send(result += `=> ${resultValue}`);
   });
 }
 
@@ -24,9 +31,16 @@ module.exports.test = function(engine) {
       });
     });
 
+    it('should do complex evaluations', function(done) {
+      engine.test('@bot roll 3d16 4d20*2+5', function(text) {
+        assert(/3d16 4d20\*2\+5 => \d+/.test(text), text);
+        done();
+      });
+    });
+
     it('should respond appropriately to incorrect syntax', function(done) {
       engine.test('@bot roll 3$16', function(text) {
-        assert.equal(text, "That ain't a valid roll.");
+        assert.equal(text, "3$16 isn't in standard dice format.");
         done();
       });
     })
