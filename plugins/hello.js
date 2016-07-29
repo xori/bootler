@@ -11,6 +11,10 @@ module.exports = function(engine) {
       d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + " " +
       d.getHours() + ":" + d.getMinutes());
   });
+
+  engine.respond(/status(?: of)?\s?(.*)/i, function(m,p, send) {
+    send("https://app.wercker.com/status/3e11407d5a86d397f9a520f2df3297cb/m/" + p[1]);
+  });
 }
 
 module.exports.test = function(engine) {
