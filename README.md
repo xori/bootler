@@ -28,7 +28,7 @@ or for something a bit more interesting
 
 1. Fork
 1. [Get a test TOKEN key](https://discordapp.com/developers/applications/me)
-  * copy `config.example.js` to `config.js` and add your token
+  * copy `config.example.json` to `config.json` and add your token
 1. `npm install; npm test; npm start`
 1. `git checkout -b my-new-feature`
 1. Work on your feature

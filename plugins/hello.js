@@ -6,7 +6,10 @@ module.exports = function(engine) {
 
   engine.respond( /--version$/i, function(m, p, send) {
     let pack = require('../package.json');
-    send(pack.version);
+    let d = engine.config.bootup;
+    send(pack.version + " " +
+      d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + " " +
+      d.getHours() + ":" + d.getMinutes());
   });
 }
 
