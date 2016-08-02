@@ -1,4 +1,3 @@
-const request = require('request');
 const fs = require('fs-extra');
 
 module.exports = function(engine) {
@@ -7,7 +6,7 @@ module.exports = function(engine) {
   engine.on( /^(?:who|what) is (.+)\?$/i, function(message, params, send) {
     let search = params[1];
     let url = "https://kgsearch.googleapis.com/v1/entities:search?query={query}&key={key}&limit=1&indent=True";
-    request.get(url.replace("{query}", search).replace("{key}", apikey),
+    engine.http.get(url.replace("{query}", search).replace("{key}", apikey),
       function (error, response, body) {
         if (!error && response.statusCode == 200) {
           let data = JSON.parse(body);
