@@ -10,6 +10,7 @@ module.exports = class Engine {
     for(let i = 0; i < this._plugins.length; i++) {
       this._plugins[i](this); // startup.
     }
+    this.http = require('request');
   }
 
   ////

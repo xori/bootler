@@ -1,11 +1,9 @@
-let request = require('request');
-
 module.exports = function (robot) {
   var url = "http://store.steampowered.com/search/suggest?term={{term}}&f=games&cc=CA&l=english&v=1127612"
   var parse = /match_name">([^<]+)<\/div>.*?CDN&#36; (\d+\.\d+)/gi
 
   robot.respond(/steam (.+)/i, function (message, params, send) {
-    request(url.replace("{{term}}", params[1]), function (err, _, body) {
+    robot.http(url.replace("{{term}}", params[1]), function (err, _, body) {
       if (err) {
         send("Encountered an error :\n" + err);
         return;
@@ -30,7 +28,7 @@ module.exports = function (robot) {
   })
 
   robot.respond( /what'?s (on sale|featured|on steam)\??$/i, function(message, params, send) {
-    request('http://store.steampowered.com/api/featured?cc=CA', function(err, _, body) {
+    robot.http('http://store.steampowered.com/api/featured?cc=CA', function(err, _, body) {
       if(err) {
         send("Encountered an error\n", err);
         return;
