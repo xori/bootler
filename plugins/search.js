@@ -3,7 +3,7 @@ const fs = require('fs-extra');
 module.exports = function(engine) {
   let apikey = engine.config.google_api;
 
-  engine.on( /^(?:who|what) is (.+)\?$/i, function(message, params, send) {
+  engine.on( /^(?:who|what) (?:is|are) (.+)\?$/i, function(message, params, send) {
     let search = params[1];
     let url = "https://kgsearch.googleapis.com/v1/entities:search?query={query}&key={key}&limit=1&indent=True";
     engine.http.get(url.replace("{query}", search).replace("{key}", apikey),
