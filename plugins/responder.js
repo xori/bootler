@@ -11,7 +11,7 @@ module.exports = function(engine) {
   engine.brain("quips", quips);
 
   engine.on(/^(.+)$/, function(message, params, send) {
-    if(message.mentions.length > 0) return; // skip @Bootler msgs
+    if(message.mentions.length > 0 && message.mentions[0].bot) return; // skip @Bootler msgs
     if(message.author.bot) return;
     for(let key in quips) {
       let regex = new RegExp(key, "i");
