@@ -54,12 +54,12 @@ module.exports = class Engine {
 
   ////
   // For testing, runs the .handle() with an overridden Discord Client.
-  test(str, callback) {
-    this.handle({
+  test(str, callback, override) {
+    this.handle(Object.assign({
       mentions:[{bot: str.indexOf("@bot") > -1}],
       author: { bot: true },
       cleanContent: str
-    }, {
+    }, override || {}), {
       sendMessage: function(_, result) {
         callback(result);
       }

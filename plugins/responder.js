@@ -47,8 +47,28 @@ module.exports = function(engine) {
   });
 
   engine.respond(/sayings --rm (.+)$/i, function(m,p, send) {
+    send(`Removing "${p[1]}"`)
     quips = engine.brain("quips");
     delete quips[p[1]];
     engine.brain('quips', quips);
   });
+}
+
+module.exports.test = function(engine) {
+  describe('Response Plugin', function() {
+    this.slow(500);
+    it('should add sayings', function(done) {
+      engine.test('@bot when someone says "f[o]{2}$" say "bar"', function(text) { done() })
+    })
+    it('should respond to sayings', function(done) {
+      engine.test('what the foo', function(text) { done() }, { author: { bot: false } })
+    })
+    it('should remove sayings', function(done) {
+      engine.test('@bot sayings --rm f[o]{2}$', function(text) {})
+      engine.test('what the foo', function(text) {
+        throw new Error("shouldn't have responded.");
+      }, { author: { bot: false } })
+      done()
+    })
+  })
 }
