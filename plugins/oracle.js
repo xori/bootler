@@ -15,3 +15,22 @@ module.exports = function(engine) {
     });
   });
 }
+
+module.exports.test = function(engine) {
+  describe('Oracle Plugin', function() {
+    this.slow(1000);
+    it('should magic eight ball', function(done) {
+      engine.test('Oh oracle, ...', function(text) { done() })
+    })
+    it('shouldn\'t care about spelling', function(done) {
+      engine.test('O oracle, ...', function(text) { done() })
+    })
+    it('should act nice, if asked nicely', function(done) {
+      engine.test('O oracle, please grant me eternal life.', function(text) {
+        if(text.match(/\/yes\/./i))
+          done();
+        else throw new Error("Why have you forsaken me.")
+      })
+    })
+  })
+}
