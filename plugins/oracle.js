@@ -1,6 +1,9 @@
 
 module.exports = function(engine) {
-  engine.on( /^oh.*?oracle/i , function(message, params, send) {
+  /* Matches on:
+    - Oh Oracle, ...
+    - O great Oracle    */
+  engine.on( /^oh?.*?oracle/i , function(message, params, send) {
     var manners = !!message.cleanContent.match( /please/i ); // ask nicely
     engine.http({
       url: "https://yesno.wtf/api" + (manners ? "?force=yes" : ""),
