@@ -52,7 +52,7 @@ module.exports = function(engine) {
     }
   });
 
-  engine.on(/^start game$/i, function(message, params, send) {
+  engine.on(/^start(?: game)?$/i, function(message, params, send) {
     if(isntGameChannel(message)) return;
     if(!dealer) return send("call for a 'new game'");
     if(dealer.state != "waiting for bets") return send("You'll have to wait.")

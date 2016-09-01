@@ -54,7 +54,7 @@ module.exports = function(robot) {
     send(report(user, bank));
   })
 
-  robot.on(/^what does (@[^\s]+) have/i, function(M, params, send) {
+  robot.on(/^what does (@[^\s]+)\s+have/i, function(M, params, send) {
     // because @Bootler will be the first mention
     const user = M.mentions[1] || M.mentions[0];
     if(!user) return send('That is not a valid account.')
@@ -69,7 +69,7 @@ module.exports = function(robot) {
       if(amount < 0) return;
     } catch(e) { return "not a valid number"; }
     const bank = robot.brain('bank') || {};
-    const account = bank[person] || {};
+    var account = bank[person] = bank[person] || {};
     account["$"] = account["$"] ? account["$"] + amount : amount;
     robot.brain('bank', bank);
     const loans = robot.brain('loans') || {};
