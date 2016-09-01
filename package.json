@@ -29,6 +29,7 @@
     "mocha": "^3.0.0"
   },
   "dependencies": {
+    "cards": "^0.1.1",
     "discord.js": "^8.0.0",
     "fs-extra": "^0.30.0",
     "request": "^2.74.0",

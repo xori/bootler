@@ -10,6 +10,7 @@ class B {
     this.state = "waiting for bets";
   }
 
+  // object: string | undefined
   render(object) {
     if(!object) object = this;
     var result = "";
@@ -70,15 +71,18 @@ class B {
     return true;
   }
 
+  // player: string
   stand(player) {
     if(this.state === 'waiting for bets') return 'we aren\'t playing yet';
     if(!this.players[player]) return `${player} is not playing.`;
+    if(this.players[player].bust) return `${player} you're bust.`;
     this.players[player].done = true;
+    return player + " stands";
   }
 
   deal() {
   	if(this.state !== 'waiting for bets') return 'game is already in progress.';
-    if(this.players.length == 0) return 'need at least one person.';
+    if(Object.keys(this.players).length == 0) return 'need at least one person.';
     this.state = 'waiting on '
         + Object.keys(this.players).map((p) => { return this.players[p].name }).join(', ');
     this.house.push(this.deck.draw());
@@ -88,6 +92,7 @@ class B {
   	return this.state;
   }
 
+  // player: string
   giveCard(player) {
     var p = this.players[player];
     if(!p) return `${player} is not playing.`;
@@ -96,13 +101,16 @@ class B {
     p.hand.push(this.deck.draw());
     var sum = this.sum(p.hand);
     if(sum > 21) p.bust = p.done = true;
+    return this.render(player);
   }
 
+  // player: string, amount: number
   takeBet(player, amount) {
     if(this.state !== 'waiting for bets') return 'game is already in progress.';
     this.players[player] = new P(player, amount);
   }
 
+  // hand array
   sum(hand) {
     var hasAce = false;
     var result = hand.reduce((prev, cur) => {
