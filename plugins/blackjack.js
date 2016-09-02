@@ -40,6 +40,7 @@ module.exports = function(engine) {
     var player = message.author;
     try {
       var bet = parseFloat(params[1])
+      if(bet > 100) return send("Maximum bet set to $100.00");
     } catch(e) { return send("that's not a real number"); }
 
     if(!bank.has(player + "", bet)) {
