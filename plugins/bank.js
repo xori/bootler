@@ -40,7 +40,7 @@ module.exports = function(robot) {
           delete loans[giver];
           send("You're loan has been forgiven.");
         }
-        robot.brain('loans')
+        robot.brain('loans', loans);
       }
     }
 
@@ -50,8 +50,9 @@ module.exports = function(robot) {
 
   robot.on(/^(?:what do I have|(?:wallet|bank)\s?(?:balance)?)/i, function(M, params, send) {
     const bank = robot.brain('bank') || {};
+    const loans = robot.brain('loans') || {};
     const user = M.author;
-    send(report(user, bank));
+    send(report(user, bank, loans));
   })
 
   robot.on(/^what does (@[^\s]+)\s+have/i, function(M, params, send) {
@@ -107,7 +108,7 @@ module.exports.library = function(robot) {
   }
 }
 
-function report(user, bank) {
+function report(user, bank, loans) {
   const account = bank[user+""] || {};
 
   let result = `${user}'s Assets:\n`;
@@ -115,6 +116,7 @@ function report(user, bank) {
   for(let currency in account) {
     result += '  ' + humanize(currency, account[currency]) + '\n';
   }
+  if(loans && loans[user]) result += "owes @Bootler: $" + (loans[user] * -1);
   return result;
 }
 
