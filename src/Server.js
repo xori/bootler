@@ -9,6 +9,7 @@ const engine = new Engine(bot);
 
 bot.on("message", function(message) {
   try {
+    console.log(`${(new Date).toISOString()}:${message.channel.name}> ${message.cleanContent}`);
     engine.handle(message, bot);
   } catch (e) {
     console.error(e);
