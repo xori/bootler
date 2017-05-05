@@ -58,7 +58,8 @@ module.exports = class Engine {
     this.handle(Object.assign({
       mentions:[{bot: str.indexOf("@bot") > -1}],
       author: { bot: true },
-      cleanContent: str
+      cleanContent: str,
+      reply: callback
     }, override || {}), {
       sendMessage: function(_, result) {
         callback(result);
