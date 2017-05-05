@@ -46,7 +46,7 @@ module.exports = class Engine {
       let capture = tmp.match(this.plugins[i].regex)
       if(capture) {
         this.plugins[i].callback(message, capture, function(m) {
-          client.sendMessage(message, m);
+          message.reply(m);
         })
       }
     }

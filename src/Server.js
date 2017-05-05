@@ -4,12 +4,12 @@ const pack = require('../package.json');
 const Discord = require("discord.js");
 const Engine = require('./Engine');
 
-const bot = new Discord.Client({autoReconnect:true});
+const bot = new Discord.Client();
 const engine = new Engine(bot);
 
 bot.on("message", function(message) {
   try {
-    console.log(`${(new Date).toISOString()}:${message.channel.name}> ${message.cleanContent}`);
+    console.log(`${(new Date).toISOString()}:${message.channel.name || message.channel.recipient.username}> ${message.cleanContent}`);
     engine.handle(message, bot);
   } catch (e) {
     console.error(e);
@@ -17,7 +17,7 @@ bot.on("message", function(message) {
   }
 });
 
-bot.loginWithToken(config.token)
+bot.login(config.token)
   .then(function() {
     console.log("Connected.");
   }).catch(function(err) {

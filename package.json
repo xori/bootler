@@ -30,10 +30,11 @@
   },
   "dependencies": {
     "cards": "^0.1.1",
-    "discord.js": "8.2.0",
+    "discord.js": "^11.0.0",
     "fs-extra": "^0.30.0",
     "request": "^2.74.0",
-    "roll": "^1.1.0",
+    "roll": "^1.2.0",
+    "uws": "^0.14.5",
     "walk-sync": "^0.3.0"
   }
 }
