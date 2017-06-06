@@ -1,7 +1,7 @@
 module.exports = function(engine) {
   const feed = "https://www.reddit.com/r/showerthoughts.json?limit=50"
-  const interval = 1000 * 60 * 60 * 18 // 18 hours
-  const plusOrminus = 1000 * 60 * 60 * 4 // ±4 hours
+  const interval = 1000 * 60 * 60 * 24 // 24 hours
+  const plusOrminus = 1000 * 60 * 60 * 2 // ±2 hours
 
   function interestingThought() {
     return new Promise((res, rej) => {
