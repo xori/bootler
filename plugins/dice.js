@@ -6,12 +6,13 @@ module.exports = function(engine) {
     let dice = new R();
 
     let result = "";
-    let resultValue = 0;
+    let resultValue = "";
     for(let i = 0; i < ask.length; i++ ) {
       let _ = ask[i].trim();
       if(dice.validate(_)) {
         result += _ + " ";
-        resultValue += dice.roll(_).result;
+        let theroll = dice.roll(_)
+        resultValue = `${theroll.result} [${theroll.rolled.join(', ')}]`;
       } else {
         return send(`${_} isn't in standard dice format.`)
       }
