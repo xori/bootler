@@ -4,7 +4,7 @@ module.exports = function(engine) {
     send("Hi, I'm a dumb bot! [Make me smarter](https://github.com/xori/bootler)");
   });
 
-  engine.respond( /--version$/i, function(m, p, send) {
+  engine.on( /^--version$/i, function(m, p, send) {
     let pack = require('../package.json');
     let d = engine.config.bootup;
     send(pack.version + " " +
@@ -12,7 +12,7 @@ module.exports = function(engine) {
       d.getHours() + ":" + d.getMinutes());
   });
 
-  engine.respond(/status(?: of)?\s?(.*)/i, function(m,p, send) {
+  engine.on(/^status(?: of)?\s?(.*)/i, function(m,p, send) {
     send("https://app.wercker.com/status/3e11407d5a86d397f9a520f2df3297cb/m/" + p[1]);
   });
 }
