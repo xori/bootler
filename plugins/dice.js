@@ -36,28 +36,28 @@ module.exports.test = function(engine) {
       engine.test('roll 3d16', function(text) {
         assert( /3d16 => \d+/.test(text) );
         done();
-      });
+      }, {author:{bot:false}});
     });
 
     it('should do complex evaluations', function(done) {
       engine.test('roll 3d16 4d20*2+5', function(text) {
         assert(/3d16 4d20\*2\+5 => \d+/.test(text), text);
         done();
-      });
+      }, {author:{bot:false}});
     });
 
     it('should respond appropriately to incorrect syntax', function(done) {
       engine.test('roll 3$16', function(text) {
         assert.equal(text, "3$16 isn't in standard dice format.");
         done();
-      });
+      }, {author:{bot:false}});
     });
 
     it('should respond if just a dice roll', function(done) {
       engine.test('5d10*2+5', function(text) {
         assert(/5d10\*2\+5 => \d+/.test(text), text);
         done();
-      });
+      }, {author:{bot:false}});
     });
 	
     it('should not respond to any text with roll', function(done) {
@@ -65,6 +65,6 @@ module.exports.test = function(engine) {
         fail();
       });
 	  setTimeout(done, 100);
-    });
+    }, {author:{bot:false}});
   });
 }
