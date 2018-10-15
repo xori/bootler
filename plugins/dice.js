@@ -1,7 +1,15 @@
 const R = require('roll');
 
 module.exports = function(engine) {
-  engine.on(/roll (.+)$/i, function(message, params, send) {
+  engine.on(/^roll (.+)$/i, roll);
+  
+  engine.on(/(^\d+d\d+(?:[\+\-\*\/]\d+)*)/i, roll);
+}
+
+function roll(message, params, send) {
+	if (message.author.bot){ // Don't get into an infinite loop with yourself
+		return;
+	}
     let ask = params[1].split(" ");
     let dice = new R();
 
@@ -12,13 +20,12 @@ module.exports = function(engine) {
       if(dice.validate(_)) {
         result += _ + " ";
         let theroll = dice.roll(_)
-        resultValue = `${theroll.result} [${theroll.rolled.join(', ')}]`;
+        resultValue += `${theroll.result} [${theroll.rolled.join(', ')}] `;
       } else {
         return send(`${_} isn't in standard dice format.`)
       }
     }
     send(result += `=> ${resultValue}`);
-  });
 }
 
 var assert = require('assert');
@@ -44,6 +51,20 @@ module.exports.test = function(engine) {
         assert.equal(text, "3$16 isn't in standard dice format.");
         done();
       });
-    })
+    });
+
+    it('should respond if just a dice roll', function(done) {
+      engine.test('5d10*2+5', function(text) {
+        assert(/5d10\*2\+5 => \d+/.test(text), text);
+        done();
+      });
+    });
+	
+    it('should not respond to any text with roll', function(done) {
+      engine.test('Hey, don\'t roll anything here', function(text) {
+        fail();
+      });
+	  setTimeout(done, 100);
+    });
   });
 }
