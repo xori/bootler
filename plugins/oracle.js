@@ -5,13 +5,17 @@ module.exports = function(engine) {
     - O great Oracle    */
   engine.on( /^oh?.*?oracle/i , function(message, params, send) {
     var manners = !!message.cleanContent.match( /please/i ); // ask nicely
-    engine.http({
-      url: "https://yesno.wtf/api" + (manners ? "?force=yes" : ""),
-      json: true
-    }, function(err, res, body) {
-      if(err) return console.log(err);
-      var oracle = body;
+    engine.http("https://yesno.wtf/api" + (manners ? "?force=yes" : ""), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => {
+      if(res.ok) return res.json();
+      else throw res;
+    }).then(body => {
       send(body.image);
+    }).catch(err => {
+      console.error(err);
     });
   });
 }

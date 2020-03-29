@@ -10,7 +10,7 @@ module.exports = class Engine {
     for(let i = 0; i < this._plugins.length; i++) {
       this._plugins[i](this); // startup.
     }
-    this.http = require('request');
+    this.http = require('node-fetch');
   }
 
   ////
@@ -32,7 +32,7 @@ module.exports = class Engine {
 
   ////
   // What the Discord Client runs on recieving a message.
-  handle(message, client) {
+  handle(message) {
     let mentioned = message.mentions.length > 0 && message.mentions[0].bot;
     let content = message.cleanContent;
     let minimalContent = content
@@ -46,7 +46,7 @@ module.exports = class Engine {
       let capture = tmp.match(this.plugins[i].regex)
       if(capture) {
         this.plugins[i].callback(message, capture, function(m) {
-          message.reply(m);
+          message.channel.send(m);
         })
       }
     }
@@ -71,4 +71,5 @@ module.exports = class Engine {
   report(err) {
     if(err) console.error(err);
   }
+
 }

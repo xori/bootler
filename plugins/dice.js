@@ -3,7 +3,7 @@ const R = require('roll');
 module.exports = function(engine) {
   engine.on(/^roll (.+)$/i, roll);
   
-  engine.on(/(^\d+d\d+(?:[\+\-\*\/]\d+)*)/i, roll);
+  engine.on(/(^\d+d\d+(?:[\+\-\*\/\.]\d+)*)/i, roll);
 }
 
 function roll(message, params, send) {

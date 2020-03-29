@@ -1,7 +1,23 @@
 
+function pickone(options) {
+  const i = Math.floor(Math.random() * options.length)
+  return options[i]
+}
+
 module.exports = function(engine) {
-  engine.on( /^(?:hello|what is|hey|hi|yo|who is)?\s?@bootler#\d+[\s\.\?\!]*$/i, function(message, params, send) {
-    send("Hi, I'm a dumb bot! [Make me smarter](https://github.com/xori/bootler)");
+  engine.on( /^(?:hello|what is|hey|hi|yo|who is)?\s?@bootler[\s\.\?\!]*$/i, function(message, params, send) {
+    send([
+      "Hi, I'm a dumb bot!",
+      "Nice to see you! <3",
+      "Hi. How are you doing?",
+      "Rise and shine, it's time for wine!",
+      "It *is* a good day to be alive",
+      "Hi, Handsome! How'd you sleep?",
+      "Morning comes whether you set the alarm or not",
+      "G'day mate!",
+      "Every day is a success if you give !!!MAXIMUM EFFORT!!!",
+      "Rise and wine, it's time for *hic* Oh God"
+    ]);
   });
 
   engine.on( /^--version$/i, function(m, p, send) {
@@ -10,10 +26,6 @@ module.exports = function(engine) {
     send(pack.version + " " +
       d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + " " +
       d.getHours() + ":" + d.getMinutes());
-  });
-
-  engine.on(/^status(?: of)?\s?(.*)/i, function(m,p, send) {
-    send("https://app.wercker.com/status/3e11407d5a86d397f9a520f2df3297cb/m/" + p[1]);
   });
 }
 
