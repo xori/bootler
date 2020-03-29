@@ -6,7 +6,7 @@ function pickone(options) {
 
 module.exports = function(engine) {
   engine.on( /^(?:hello|what is|hey|hi|yo|who is)?\s?@bootler[\s\.\?\!]*$/i, function(message, params, send) {
-    send([
+    send(pickone([
       "Hi, I'm a dumb bot!",
       "Nice to see you! <3",
       "Hi. How are you doing?",
@@ -17,7 +17,7 @@ module.exports = function(engine) {
       "G'day mate!",
       "Every day is a success if you give !!!MAXIMUM EFFORT!!!",
       "Rise and wine, it's time for *hic* Oh God"
-    ]);
+    ]));
   });
 
   engine.on( /^--version$/i, function(m, p, send) {
