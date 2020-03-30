@@ -5,8 +5,8 @@ module.exports = class Engine {
     this.client = client;
     this.config = require('./ConfigLoader');
     this.brain = require('./Brain');
-    this.zzz = true;
-    
+    this.zzz = false;
+
     this.plugins = [];
     this._plugins = require('./PluginLoader');
     for(let i = 0; i < this._plugins.length; i++) {

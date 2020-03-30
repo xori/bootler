@@ -1,4 +1,3 @@
-
 function pickone(options) {
   const i = Math.floor(Math.random() * options.length)
   return options[i]
@@ -16,6 +15,18 @@ const activities = [
 ]
 
 module.exports = function(engine) {
+
+  engine.on( /^wake\s?up$/i, function(m, p, send) {
+    console.log(engine.zzz)
+    if(engine.zzz) {
+      send(pickone([
+        "Awwww geees     ",
+        "Nnnnrrrrrggggg       ",
+        "I don't wanna be awake",
+      ]))
+    }
+  });
+
 
   function doSomething() {
     // if not logged in, don't do anything.

@@ -45,3 +45,9 @@ module.exports = function(engine, message, result) {
 
   message.channel.send(msg);
 };
+
+module.exports.wakeup = function(value) {
+  woken = value || Math.min(5, woken + 1)
+  clearTimeout(sleepTimer);
+  sleepTimer = setTimeout(() => woken = 0, 1000 * 60 * 45)
+};

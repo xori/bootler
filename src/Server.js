@@ -14,6 +14,7 @@ client.on("message", function(message) {
       console.log(`skipping ${message.guild.name}:${message.channel.name || message.channel.recipient.username}> ${message.cleanContent}`);
       return;
     }
+    // console.log(`${message.guild.name}:${message.channel.name || message.channel.recipient.username}> ${message.cleanContent}`);
     engine.handle(message);
   } catch (e) {
     console.error(e);
