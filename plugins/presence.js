@@ -58,5 +58,5 @@ module.exports = function(engine) {
   }
 
   setInterval(doSomething, 1000 * 60 * 60) // once per hour
-  // setTimeout(doSomething, 2000)
+  setTimeout(doSomething, 2000)
 }
