@@ -10,7 +10,10 @@ const engine = new Engine(client);
 
 client.on("message", function(message) {
   try {
-    //console.log(`${(new Date).toISOString()}:${message.channel.name || message.channel.recipient.username}> ${message.cleanContent}`);
+    if(process.env.NODE_ENV !== 'production' && message.guild != null) {
+      console.log(`skipping ${message.guild.name}:${message.channel.name || message.channel.recipient.username}> ${message.cleanContent}`);
+      return;
+    }
     engine.handle(message);
   } catch (e) {
     console.error(e);

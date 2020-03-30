@@ -1,10 +1,12 @@
+const SleepHandler = require('./Sleepy')
 
 module.exports = class Engine {
   constructor(client) {
     this.client = client;
     this.config = require('./ConfigLoader');
     this.brain = require('./Brain');
-
+    this.zzz = true;
+    
     this.plugins = [];
     this._plugins = require('./PluginLoader');
     for(let i = 0; i < this._plugins.length; i++) {
@@ -33,6 +35,7 @@ module.exports = class Engine {
   ////
   // What the Discord Client runs on recieving a message.
   handle(message) {
+    const that = this;
     let mentioned = message.mentions.length > 0 && message.mentions[0].bot;
     let content = message.cleanContent;
     let minimalContent = content
@@ -46,7 +49,12 @@ module.exports = class Engine {
       let capture = tmp.match(this.plugins[i].regex)
       if(capture) {
         this.plugins[i].callback(message, capture, function(m) {
-          message.channel.send(m);
+          // if we're sleeping cancel this.
+          if(that.zzz) {
+            SleepHandler(that, message, m)
+          } else {
+            message.channel.send(m);
+          }
         })
       }
     }
