@@ -7,24 +7,19 @@ function pickone(options) {
 const activities = [
   ['PLAYING', 'in Limbo.'],
   ['STREAMING', 'the best show.', 'https://www.youtube.com/watch?v=NkNXERhiXNw&list=PL3oTh7HxUAl-QvH5Lszu_RzzarIqvFYdk'],
-  ['LISTENING', 'sweet tunes.'],
-  ['LISTENING', 'LoFi Hip Hop Beats.', 'https://www.youtube.com/watch?v=5qap5aO4i9A'],
+  ['STREAMING', 'sweet tunes.', 'https://degitx.bandcamp.com/album/red-flower'],
+  ['STREAMING', 'LoFi Hip Hop Beats.', 'https://www.youtube.com/watch?v=5qap5aO4i9A'],
   ['LISTENING', 'some Binary Stars.'],
   ['PLAYING', 'Mario Party'],
   ['PLAYING', 'Animal Crossing'],
+  ['STREAMING', 'some Bob Ross', 'https://www.youtube.com/watch?v=RqtDliGeyTg'],
+  ['LISTENING', 'The Y Axes', 'https://theyaxes.bandcamp.com/']
 ]
 
 module.exports = function(engine) {
 
-  engine.on( /^wake\s?up$/i, function(m, p, send) {
-    console.log(engine.zzz)
-    if(engine.zzz) {
-      send(pickone([
-        "Awwww geees     ",
-        "Nnnnrrrrrggggg       ",
-        "I don't wanna be awake",
-      ]))
-    }
+  engine.on( /^do something$/i, function(m, p, send) {
+    doSomething()
   });
 
 
@@ -50,8 +45,9 @@ module.exports = function(engine) {
     const action = Math.random()
     // 55% chance of nothing happening.
     if(action < 0.55) {
-      engine.client.user.setPresence({ status: 'online' })
+      engine.client.user.setActivity(null)
         .catch(console.error);
+      console.log("just chilling.")
     } else {
       const i = Math.floor(Math.random() * activities.length)
       const activity = activities[i]
@@ -62,12 +58,12 @@ module.exports = function(engine) {
            url: activity[2]
         },
         status: 'online'
-      })
-        .catch(console.error);
+      }).catch(console.error);
+      console.log(activity[1])
     }
 
   }
 
   setInterval(doSomething, 1000 * 60 * 60) // once per hour
-  setTimeout(doSomething, 2000)
+  setTimeout(doSomething, 3000)
 }

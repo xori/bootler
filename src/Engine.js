@@ -1,5 +1,3 @@
-const SleepHandler = require('./Sleepy')
-
 module.exports = class Engine {
   constructor(client) {
     this.client = client;
@@ -49,12 +47,7 @@ module.exports = class Engine {
       let capture = tmp.match(this.plugins[i].regex)
       if(capture) {
         this.plugins[i].callback(message, capture, function(m) {
-          // if we're sleeping cancel this.
-          if(that.zzz) {
-            SleepHandler(that, message, m)
-          } else {
-            message.channel.send(m);
-          }
+          message.channel.send(m);
         })
       }
     }

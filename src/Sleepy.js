@@ -26,6 +26,7 @@ module.exports = function(engine, message, result) {
 
   if(awake) {
     wakeup(engine)
+    message.channel.send(msg);
     return;
   }
 
