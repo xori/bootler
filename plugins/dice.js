@@ -1,8 +1,8 @@
 const R = require('roll');
 
 module.exports = function(engine) {
-  engine.on(/^roll (.+)$/i, roll);
-  
+  engine.on(/^roll (\d+d\d+(?:[\+\-\*\/\.]\d+)*)/i, roll);
+
   engine.on(/(^\d+d\d+(?:[\+\-\*\/\.]\d+)*)/i, roll);
 }
 
@@ -59,7 +59,7 @@ module.exports.test = function(engine) {
         done();
       }, {author:{bot:false}});
     });
-	
+
     it('should not respond to any text with roll', function(done) {
       engine.test('Hey, don\'t roll anything here', function(text) {
         fail();
