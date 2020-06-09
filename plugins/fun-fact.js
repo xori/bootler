@@ -33,11 +33,6 @@ module.exports = function(engine) {
     })
   }
 
-  engine.on(/good morning,? (team|everyone)/i, (m, p, send) => {
-    interestingThought().then(thought => send(thought))
-      .catch(e => console.error(e));
-  });
-
   engine.on(/give me a thought/i, (m, p, send) => {
     interestingThought().then(thought => send(thought))
       .catch(e => console.error(e));

@@ -1,5 +1,7 @@
 {
   "token": "",
   "google_api": "",
+  "twitter_consumer_key": "",
+  "twitter_consumer_secret": "",
   "brain": "./brain"
 }
