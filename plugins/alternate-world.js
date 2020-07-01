@@ -64,4 +64,9 @@ module.exports = async function(engine) {
     getDream().then(dream => send(dream))
       .catch(e => console.error(e));
   });
+
+  engine.on(/good night,? (team|everyone)/i, async (m, p, send) => {
+    getDream().then(dream => send(dream))
+      .catch(e => console.error(e));
+  });
 }
