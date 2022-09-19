@@ -10,7 +10,10 @@ module.exports = class Engine {
     for(let i = 0; i < this._plugins.length; i++) {
       this._plugins[i](this); // startup.
     }
-    this.http = require('node-fetch');
+    this.http = null;
+    import('node-fetch').then(resolved => {
+      this.http = resolved.default
+    })
   }
 
   ////
@@ -34,17 +37,11 @@ module.exports = class Engine {
   // What the Discord Client runs on recieving a message.
   handle(message) {
     const that = this;
-    let mentioned = message.mentions.length > 0 && message.mentions[0].bot;
-    let content = message.cleanContent;
-    let minimalContent = content
-    if(mentioned && /^(?:[\w\s]+)?@(?:[\w\d]+).?\s(.+)$/.test(content)){
-      minimalContent = content.match( /^(?:[\w\s]+)?@(?:[\w\d]+).?\s(.+)$/ )[1]
-    }
+    let mentioned = Array.from(message.mentions.users.values()).some(user => user.bot && user.username === 'Bootler')
+    let content = message.content;
     for(let i = 0; i < this.plugins.length; i++) {
       if(!mentioned && this.plugins[i].mention) continue;
-      let tmp = content;
-      if(this.plugins[i].mention) tmp = minimalContent;
-      let capture = tmp.match(this.plugins[i].regex)
+      let capture = content.match(this.plugins[i].regex)
       if(capture) {
         this.plugins[i].callback(message, capture, function(m) {
           message.channel.send(m);
@@ -56,16 +53,27 @@ module.exports = class Engine {
   ////
   // For testing, runs the .handle() with an overridden Discord Client.
   test(str, callback, override) {
+    let mentions = []
+    if (override?.mentioned || str.indexOf("@bot") > -1) {
+      mentions = [[
+        '101', {
+          bot: true,
+          username: 'Bootler',
+        }
+      ]]
+    }
+
     this.handle(Object.assign({
-      mentions:[{bot: str.indexOf("@bot") > -1}],
       author: { bot: true },
-      cleanContent: str,
-      reply: callback
-    }, override || {}), {
-      sendMessage: function(_, result) {
-        callback(result);
-      }
-    });
+      content: str,
+      reply: callback,
+      channel: {
+        send: callback,
+      },
+      mentions: {
+        users: new Map(mentions)
+      },
+    }, override || {}));
   }
 
   // For reporting errors if they occur.

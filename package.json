@@ -1,15 +1,19 @@
 {
   "name": "bootler",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "A discord bot, written in javascript.",
   "main": "./src/Server.js",
   "scripts": {
     "start": "node --use_strict ./src/Server.js",
-    "watch": "nodemon -i ./brain"
+    "watch": "nodemon -i ./brain",
+    "test": "mocha ./test/test.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xori/bootler.git"
+  },
+  "engines": {
+    "node": "^16.0.0"
   },
   "keywords": [],
   "author": "Evan Verworn <evan@verworn.ca>",
@@ -19,14 +23,16 @@
   },
   "homepage": "https://github.com/xori/bootler#readme",
   "dependencies": {
-    "cards": "^0.1.1",
-    "discord.js": "^12.0.0",
-    "fs-extra": "^0.30.0",
-    "html-entities": "^1.3.1",
-    "node-fetch": "^2.6.0",
-    "roll": "^1.2.0",
-    "twitter-lite": "^0.13.0",
-    "uws": "^0.14.5",
-    "walk-sync": "^0.3.0"
+    "cards": "^2.0.2",
+    "discord.js": "^14.3.0",
+    "fs-extra": "^10.1.0",
+    "html-entities": "^2.3.3",
+    "node-fetch": "^3.2.10",
+    "roll": "^1.3.1",
+    "twitter-lite": "^1.1.0",
+    "walk-sync": "^3.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0"
   }
 }

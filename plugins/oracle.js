@@ -4,7 +4,7 @@ module.exports = function(engine) {
     - Oh Oracle, ...
     - O great Oracle    */
   engine.on( /^oh?.*?oracle/i , function(message, params, send) {
-    var manners = !!message.cleanContent.match( /please/i ); // ask nicely
+    var manners = !!message.content.match( /please/i ); // ask nicely
     engine.http("https://yesno.wtf/api" + (manners ? "?force=yes" : ""), {
       headers: {
         'Content-Type': 'application/json'

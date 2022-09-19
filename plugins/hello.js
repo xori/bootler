@@ -5,7 +5,7 @@ function pickone(options) {
 }
 
 module.exports = function(engine) {
-  engine.on( /^(?:hello|what is|hey|hi|yo|who is)?\s?@bootler[\s\.\?\!]*$/i, function(message, params, send) {
+  engine.respond(/^(?:hello|what is|sup|hey|hi|yo|who is)/i, function(message, params, send) {
     send(pickone([
       "Hi, I'm a dumb bot!",
       "Nice to see you! <3",
@@ -32,13 +32,14 @@ module.exports = function(engine) {
 module.exports.test = function(engine) {
   describe('Hello Plugin', function() {
     it('should say hi', function(done) {
-      engine.test('hi @bootler#1234', function(text) { done() })
+      engine.test('hi @bootler#1234', function(text) { done() }, {
+        mentioned: true
+      })
     })
     it('should respond to hey', function(done) {
-      engine.test('Hey @Bootler#1234', function(text) { done() })
-    })
-    it('should respond to confusion', function(done) {
-      engine.test('@Bootler#1234 ?', function(text) { done() })
+      engine.test('Hey @Bootler#1234', function(text) { done() }, {
+        mentioned: true
+      })
     })
   })
 }

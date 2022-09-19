@@ -1,26 +1,35 @@
 const R = require('roll');
 
 module.exports = function(engine) {
-  engine.on(/^roll (\d+d\d+(?:[\+\-\*\/\.]\d+)*)/i, roll);
+  engine.on(/^roll ((?:\d+d\d+(?:[\+\-\/\*\ddb%\s]*)?)+)/i, roll);
 
-  engine.on(/(^\d+d\d+(?:[\+\-\*\/\.]\d+)*)/i, roll);
+  engine.on(/^((?:\d+d\d+(?:[\+\-\/\*\ddb%\s]*)?)+)/i, roll);
 }
 
 function roll(message, params, send) {
 	if (message.author.bot){ // Don't get into an infinite loop with yourself
 		return;
 	}
-    let ask = params[1].split(" ");
+    let ask = params[1].split(/\d+\s+\d+/);
     let dice = new R();
 
     let result = "";
     let resultValue = "";
     for(let i = 0; i < ask.length; i++ ) {
-      let _ = ask[i].trim();
+      let _ = ask[i].replace(/\s/g, '');
       if(dice.validate(_)) {
         result += _ + " ";
         let theroll = dice.roll(_)
-        resultValue += `${theroll.result} [${theroll.rolled.join(', ')}] `;
+        resultValue += `${theroll.result} [`
+        theroll.rolled.map((item, i, arr) => {
+          if (item.join && item.length > 1) {
+            resultValue += `(${item.join(', ')})`
+          } else {
+            resultValue += item
+          }
+          resultValue += i < arr.length - 1 ? ', ': ''
+        })
+        resultValue += ']'
       } else {
         return send(`${_} isn't in standard dice format.`)
       }
@@ -40,15 +49,15 @@ module.exports.test = function(engine) {
     });
 
     it('should do complex evaluations', function(done) {
-      engine.test('roll 3d16 4d20*2+5', function(text) {
-        assert(/3d16 4d20\*2\+5 => \d+/.test(text), text);
+      engine.test('roll 3d16+4d20*2', function(text) {
+        assert(/3d16\+4d20\*2 => \d+/.test(text), text);
         done();
       }, {author:{bot:false}});
     });
 
     it('should respond appropriately to incorrect syntax', function(done) {
-      engine.test('roll 3$16', function(text) {
-        assert.equal(text, "3$16 isn't in standard dice format.");
+      engine.test('roll 3d16+', function(text) {
+        assert.equal(text, "3d16+ isn't in standard dice format.");
         done();
       }, {author:{bot:false}});
     });

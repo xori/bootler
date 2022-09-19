@@ -1,5 +1,4 @@
-const Entities = require('html-entities').XmlEntities;
-const entities = new Entities();
+const {decode} = require('html-entities');
 const Twitter = require('twitter-lite');
 
 module.exports = async function(engine) {
@@ -54,8 +53,7 @@ module.exports = async function(engine) {
       } else {
         alreadyMentioned.push(alternateDimensions[0].id_str)
         engine.brain('dreams', alreadyMentioned)
-        return entities.decode(alternateDimensions[0].full_text)
-
+        return decode(alternateDimensions[0].full_text, {level: 'html5'})
       }
     }
   }
